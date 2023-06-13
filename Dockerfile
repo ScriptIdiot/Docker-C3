@@ -9,9 +9,10 @@ COPY . /app
 RUN apt update && apt install -y wget software-properties-common apt-transport-https curl screen unzip smbclient cifs-utils samba winbind
 
 #install winehq (v5.0) and winetricks
+#install wine 7.0.2 because version 8 gives winhttpquerydataavailable error code: 122
 RUN dpkg --add-architecture i386 && apt update
 RUN wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
-RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && apt update && apt install --install-recommends -y winehq-stable wine-stable
+RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main' && apt update && apt install --install-recommends -y winehq-stable=7.0.2~focal-1 wine-stable=7.0.2~focal-1 wine-stable-i386=7.0.2~focal-1 wine-stable-amd64=7.0.2~focal-1
 
 # Install dotnet sdk
 RUN wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb
